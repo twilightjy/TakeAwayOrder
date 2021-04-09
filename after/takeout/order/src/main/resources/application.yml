@@ -1,0 +1,15 @@
+
+server:
+  port: 8281
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/takeout
+    username: root
+    password: Shizairenwei
+  application:
+    name: order
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: cn/hust/mapper/xml/*.xml
