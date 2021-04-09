@@ -14,5 +14,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ProductCategoryMapper extends BaseMapper<ProductCategory> {
-
+    //根据categoryType查询categoryName
+    public String getCategoryNameByType(Integer type);
 }

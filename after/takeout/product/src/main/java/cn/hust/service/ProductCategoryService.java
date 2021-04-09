@@ -16,7 +16,10 @@ import java.util.List;
  */
 public interface ProductCategoryService extends IService<ProductCategory> {
 
-    /*查询商品信息*/
+    /*查询全部分类下的全部商品信息*/
     public List<ProductCategoryVo> ProductCategoryVoList();
+
+    /*只返回商品分类信息,不包含其下的foods*/
+    public List<ProductCategoryVo> onlyProductCategoryVoList();
 
 }

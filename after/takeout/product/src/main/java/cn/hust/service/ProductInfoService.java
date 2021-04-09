@@ -1,6 +1,7 @@
 package cn.hust.service;
 
 import cn.hust.entity.ProductInfo;
+import cn.hust.vo.ProductInfoPageVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -12,6 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2021-04-06
  */
 public interface ProductInfoService extends IService<ProductInfo> {
-
-
+    public ProductInfoPageVo productInfoPageVo(Integer size,Integer total);
 }

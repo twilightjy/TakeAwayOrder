@@ -32,6 +32,8 @@ public class ProductCategoryServiceImpl extends ServiceImpl<ProductCategoryMappe
 
     @Autowired
     private ProductInfoMapper productInfoMapper ;
+
+
     /* 查询商品信息
      * 1、查询所有的商品分类
      * 2、查询每个分类对应的商品信息
@@ -75,6 +77,24 @@ public class ProductCategoryServiceImpl extends ServiceImpl<ProductCategoryMappe
         return productCategoryVoList;
     }
 
+    @Override
+    public List<ProductCategoryVo> onlyProductCategoryVoList() {
+        //获取全部商品分类（早午晚餐）,无需条件，直接查询;然后逐个封装成对应VO
+        List<ProductCategory> productCategoryList = this.productCategoryMapper.selectList(null);
+        //将商品分类VO装到一个集合中，也是最终的返回值
+        List<ProductCategoryVo> productCategoryVoList = new ArrayList<>();
+        //获取每一个分类的name和type
+        for (ProductCategory productCategory : productCategoryList) {
+            //获取Type
+            Integer categoryType = productCategory.getCategoryType();
+            //将每个商品分类封装成VO
+            ProductCategoryVo productCategoryVo = new ProductCategoryVo();//new VO
+            productCategoryVo.setName(productCategory.getCategoryName());//设置name
+            productCategoryVo.setType(productCategory.getCategoryType());//设置type
+            productCategoryVoList.add(productCategoryVo);
+        }
+        return productCategoryVoList;
+    }
 
 
 }

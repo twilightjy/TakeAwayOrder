@@ -58,5 +58,14 @@ public class ProductInfoVo {
     @JsonProperty("stock")
     private Integer productStock ;
 
+    /*
+     *通过id查询 商品的status
+     */
+    private boolean status ;
+
+    /*
+     *通过id查询 商品的categoryName 在product_category表中
+     */
+    private String categoryName;
 
 }

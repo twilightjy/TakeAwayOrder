@@ -4,12 +4,16 @@ package cn.hust.controller;
 import cn.hust.entity.ProductInfo;
 import cn.hust.service.ProductCategoryService;
 import cn.hust.service.ProductInfoService;
+import cn.hust.utils.ResultVoUtil;
 import cn.hust.vo.ProductCategoryVo;
 import cn.hust.vo.ResultVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -57,7 +61,7 @@ public class ProductInfoBuyerController {
      *
      * @param id productId
      * @param quantity 订单中某样商品的数量（客户需求量）
-     * @return 是否成功取出库存
+     * @return 根据商品quantity和库存关系进行对库存stock的修改
      */
     @PutMapping("/subStock/{id}/{quantity}")
     public boolean subStock(@PathVariable("id") Integer id , @PathVariable("quantity") Integer quantity){
