@@ -77,6 +77,11 @@ public class ProductCategoryServiceImpl extends ServiceImpl<ProductCategoryMappe
         return productCategoryVoList;
     }
 
+    /**
+     * 只返回商品分类信息,不包含其下的foods
+     * 即ProductCategoryVo中，只对name和type赋值了，foods没赋值
+     * @return
+     */
     @Override
     public List<ProductCategoryVo> onlyProductCategoryVoList() {
         //获取全部商品分类（早午晚餐）,无需条件，直接查询;然后逐个封装成对应VO
@@ -85,8 +90,6 @@ public class ProductCategoryServiceImpl extends ServiceImpl<ProductCategoryMappe
         List<ProductCategoryVo> productCategoryVoList = new ArrayList<>();
         //获取每一个分类的name和type
         for (ProductCategory productCategory : productCategoryList) {
-            //获取Type
-            Integer categoryType = productCategory.getCategoryType();
             //将每个商品分类封装成VO
             ProductCategoryVo productCategoryVo = new ProductCategoryVo();//new VO
             productCategoryVo.setName(productCategory.getCategoryName());//设置name

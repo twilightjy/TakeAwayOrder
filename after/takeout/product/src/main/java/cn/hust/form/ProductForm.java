@@ -1,21 +1,15 @@
-package cn.hust.vo;
-/**
- * <p>
- * 商品信息VO
- * 由于根据数据库建立的实体类和前端的data的格式不完全匹配，所以需要自己根据data写VO
- * </p>
- *
- * @author zz
- * @since 2021-04-08
- */
+package cn.hust.form;
+
+import cn.hust.entity.ProductCategory;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-
 import java.math.BigDecimal;
-import java.util.Map;
 
+/**
+ * JSON格式参数封装成Form
+ */
 @Data
-public class ProductInfoVo {
+public class ProductForm {
 
     /**
      * 商品id
@@ -48,31 +42,38 @@ public class ProductInfoVo {
     private String productIcon ;
 
     /**
-     * 商品数量 quantity
-     */
-    @JsonProperty("quantity")
-    private Integer productQuantity = 0 ;
-
-    /**
      * 商品库存 stock
      */
     @JsonProperty("stock")
     private Integer productStock ;
 
     /*
-     *通过id查询 商品的status
+     *
      */
-    private boolean status ;
+    @JsonProperty("status")
+    private boolean productStatus ;
 
-    /*
-     *通过id查询 商品的categoryName 在product_category表中
+    /**
+     * ProductCategory实体类
      */
-    private String categoryName;
-
-    /*
-
-     */
-    private Map<String,Integer> category ;
+    @JsonProperty("category")
+    private ProductCategory productCategory ;
 
 
 }
+
+/*假数据格式
+ {
+ "status": true,
+ "id": 1,
+ "name": "肉夹馍",
+ "price": 16,
+ "stock": 107,
+ "description": "好吃好吃",
+ "icon": "https://s1.st.meishij.net/rs/50/123/6030800/n6030800_152708155351112.jpg",
+ "category": {
+    "categoryId": 1,
+    "categoryName": "热销榜",
+    "categoryType": 2
+ }
+ }*/

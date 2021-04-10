@@ -14,5 +14,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ProductInfoMapper extends BaseMapper<ProductInfo> {
-
+     public int updateStatusById(Integer statusInt , Integer id) ;
 }

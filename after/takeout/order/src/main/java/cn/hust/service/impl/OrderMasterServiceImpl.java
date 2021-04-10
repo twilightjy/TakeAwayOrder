@@ -9,7 +9,10 @@ import cn.hust.mapper.OrderDetailMapper;
 import cn.hust.mapper.OrderMasterMapper;
 import cn.hust.mapper.ProductInfoMapper;
 import cn.hust.service.OrderMasterService;
+import cn.hust.vo.OrderMasterVo;
+import cn.hust.vo.OrderPageVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,5 +95,22 @@ public class OrderMasterServiceImpl extends ServiceImpl<OrderMasterMapper, Order
         }
 
         return insert == 1;
+    }
+
+    /**
+     *
+     * @param page 展示第page页
+     * @param size 每页展示数量
+     * @return VO
+     */
+    @Override
+    public OrderPageVo orderPageVo(Integer page, Integer size) {
+        Page<OrderMaster> masterPage = new Page<>(page,size);
+        Page<OrderMaster> orderMasterPage = this.orderMasterMapper.selectPage(masterPage, null);
+        OrderPageVo orderPageVo = new OrderPageVo();
+        orderPageVo.setContent(orderMasterPage.getRecords());
+        orderPageVo.setSize(orderMasterPage.getSize());
+        orderPageVo.setTotal(orderMasterPage.getTotal());
+        return orderPageVo ;
     }
 }

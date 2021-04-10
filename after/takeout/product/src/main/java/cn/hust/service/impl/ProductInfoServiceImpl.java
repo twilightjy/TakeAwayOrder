@@ -15,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -47,7 +49,7 @@ public class ProductInfoServiceImpl extends ServiceImpl<ProductInfoMapper, Produ
         Page<ProductInfo> selectPage = this.productInfoMapper.selectPage(productInfoPage, null);
         //
         List<ProductInfo> records = selectPage.getRecords();
-        //根据productInfo 即record 封装成productInfoVo
+        //根据productInfo 即record, 封装成productInfoVo
         List<ProductInfoVo> productInfoVoList = new ArrayList<>();
         for (ProductInfo record : records) {
             ProductInfoVo productInfoVo = new ProductInfoVo();
@@ -78,5 +80,38 @@ public class ProductInfoServiceImpl extends ServiceImpl<ProductInfoMapper, Produ
         productInfoPageVo.setTotal(total1);
         productInfoPageVo.setSize(size1);
         return productInfoPageVo;
+    }
+
+
+    /**通过id查询商品
+     * 封装data对应的VO
+     * @param id
+     * @return
+     */
+    @Override
+    public ProductInfoVo findById(Integer id) {
+        ProductInfo productInfo = this.productInfoMapper.selectById(id);
+        ProductInfoVo productInfoVo = new ProductInfoVo();
+        BeanUtils.copyProperties(productInfo,productInfoVo);
+        if(productInfo.getProductStatus() == 1){
+            productInfoVo.setStatus(true);
+        }else {
+            productInfoVo.setStatus(false);
+        }
+        Map<String,Integer> category = new HashMap<>();
+        category.put("categoryType",productInfo.getCategoryType());
+        productInfoVo.setCategory(category);
+        return productInfoVo;
+    }
+
+    /**
+     * 根据product_id修改product_info表中对应行的product_status
+     * @param id product_id
+     * @return 修改成功与否
+     */
+    @Override
+    public boolean updateStatusById(Integer statusInt , Integer id) {
+        int i = this.productInfoMapper.updateStatusById(statusInt, id);
+        return i == 1;
     }
 }

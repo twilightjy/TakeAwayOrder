@@ -2,6 +2,7 @@ package cn.hust.service;
 
 import cn.hust.entity.OrderMaster;
 import cn.hust.form.OrderForm;
+import cn.hust.vo.OrderPageVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -14,4 +15,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface OrderMasterService extends IService<OrderMaster> {
     public boolean insert(OrderForm orderForm) ;
+
+    public OrderPageVo orderPageVo(Integer page , Integer size);
 }

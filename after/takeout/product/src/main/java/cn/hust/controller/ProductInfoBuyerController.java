@@ -33,7 +33,7 @@ public class ProductInfoBuyerController {
     @Autowired
     private ProductInfoService productInfoService;
 
-    /**返回商品列表
+    /**商品列表
      * List<ProductCategoryVo> 是ResultVo<T> 的泛型声明
      * @return 商品列表
      */
@@ -49,7 +49,7 @@ public class ProductInfoBuyerController {
     /**
      *
      * @param id productId
-     * @return 根据id在product_info表中查到对应行的信息，以entity中的封装的ProductInfo对象的形式返回
+     * @return 根据id在product_info表中查到对应行的信息
      */
     @GetMapping("/findById/{id}")
     public ProductInfo findById(@PathVariable("id") Integer id){
@@ -58,7 +58,8 @@ public class ProductInfoBuyerController {
 
 
     /**
-     *
+     *修改stock 通过Feign被调用
+     * 调用者：OrderMasterServiceImpl中的insert方法
      * @param id productId
      * @param quantity 订单中某样商品的数量（客户需求量）
      * @return 根据商品quantity和库存关系进行对库存stock的修改

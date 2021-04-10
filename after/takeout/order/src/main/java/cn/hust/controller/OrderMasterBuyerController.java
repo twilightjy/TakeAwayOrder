@@ -78,7 +78,8 @@ public class OrderMasterBuyerController {
     }
 
 
-    /**
+    /**查询订单详情
+     *
      * 基于上面的list方法，对OrderDetailList进行了赋值
      * @param buyerId 1
      * @param orderId 1
@@ -132,8 +133,8 @@ public class OrderMasterBuyerController {
     }
 
 
-    /**
-     * 完结订单
+    /**完结订单
+     *
      * @param orderId 1
      * @return 1
      */
@@ -154,8 +155,8 @@ public class OrderMasterBuyerController {
         return ResultVoUtil.fail();
     }
 
-    /**
-     * 支付订单
+    /**支付订单
+     *
      * @param buyerId 1
      * @param orderId 1
      * @return 1
