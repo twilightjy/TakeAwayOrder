@@ -1,0 +1,19 @@
+server:
+  port: 8383
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      globalcors:
+        cors-conf  igurations:
+          '[/**]':
+            allowed-origins:
+              - "http://localhost:8282"
+              - "http://localhost:8283"
+            allowed-headers: "*"
+            allowed-methods: "*"
+            max-age: 3600
+      discovery:
+        locator:
+          enabled: true

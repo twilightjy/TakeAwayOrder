@@ -18,7 +18,7 @@
                         <div style="float:left;width: 30px;height: 40px;">
                             <img style="height: 40px" :src="item.productIcon"/>
                         </div>
-                        <div style="float:left;height:40px;width: 110px; line-height: 40px; margin-left: 10px;">{{item.productName}}</div>
+                        <div style="float:left;height:40px;width: 110px; line-height: 40px; margin-left: 50px;">{{item.productName}}</div>
                         <div style="float:left;height:40px;width: 50px; line-height: 40px; margin-left: 100px;">
                             <span class="mui-icon mui-icon-closeempty" style="position: relative;top: 3px;"></span>{{item.productQuantity}}
                         </div>
@@ -42,51 +42,20 @@
         name: "orderDetail",
         data(){
             return {
-                data:{
-                    "orderId": "161899085773669363",
-                    "buyerName": "李四",
-                    "buyerPhone": "18868877111",
-                    "buyerAddress": "科技路",
-                    "buyerOpenid": "18eu2jwk2kse3r42e2e",
-                    "orderAmount": 36,
-                    "orderStatus": 0,
-                    "payStatus": 0,
-                    "createTime": 1490177352,
-                    "updateTime": 1490177352,
-                    "orderDetailList": [
-                        {
-                            "detailId": "161899085974995851",
-                            "orderId": "161899085773669363",
-                            "productId": "157875196362360019",
-                            "productName": "招牌奶茶",
-                            "productPrice": 9,
-                            "productQuantity": 2,
-                            "productIcon": "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1347607405,961608748&fm=26&gp=0.jpg"
-                        },
-                        {
-                            "detailId": "161899085974995851",
-                            "orderId": "161899085773669363",
-                            "productId": "157875196362360019",
-                            "productName": "招牌奶茶",
-                            "productPrice": 9,
-                            "productQuantity": 2,
-                            "productIcon": "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1347607405,961608748&fm=26&gp=0.jpg"
-                        }
-                    ]
-                },
+                data:null,
                 selected:'',
                 payStatus:0,
                 orderStatus:0
             }
         },
         created(){
-            // this.$store.state.index = 2
-            // const _this = this
-            // axios.get('http://localhost:8180/order-service/buyer/order/detail/'+JSON.parse(window.localStorage.getItem('access-user')).openid+'/'+this.$route.query.orderId).then(function (resp) {
-            //     _this.data = resp.data.data
-            //     _this.payStatus = resp.data.data.payStatus
-            //     _this.orderStatus = resp.data.data.orderStatus
-            // })
+            this.$store.state.index = 2
+            const _this = this
+            axios.get('http://localhost:8383/order/buyer/order/detail/'+JSON.parse(window.localStorage.getItem('user')).openid+'/'+this.$route.query.orderId).then(function (resp) {
+                _this.data = resp.data.data
+                _this.payStatus = resp.data.data.payStatus
+                _this.orderStatus = resp.data.data.orderStatus
+            })
         },
         methods:{
             //根据status映射相应的订单状态
@@ -117,7 +86,7 @@
             cancelOrder(){
                 const _this = this
                 MessageBox.confirm('确定取消订单吗?').then(action => {
-                    axios.put('http://localhost:8180/order-service/buyer/order/cancel/'+JSON.parse(window.localStorage.getItem('access-user')).openid+'/'+this.$route.query.orderId).then(function (resp) {
+                    axios.put('http://localhost:8383/order/buyer/order/cancel/'+JSON.parse(window.localStorage.getItem('user')).openid+'/'+this.$route.query.orderId).then(function (resp) {
                         if(resp.data.code == 0){
                             let instance = Toast('取消成功');
                             setTimeout(() => {

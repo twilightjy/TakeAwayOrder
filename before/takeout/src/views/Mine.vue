@@ -43,7 +43,7 @@
         },
         created() {
             this.$store.state.index = 3
-            this.buyer = JSON.parse(window.localStorage.getItem('access-user'))
+            this.buyer = JSON.parse(window.localStorage.getItem('user'))
         }
     }
 </script>

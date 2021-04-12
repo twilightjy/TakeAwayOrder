@@ -50,7 +50,7 @@ public class OrderMasterServiceImpl extends ServiceImpl<OrderMasterMapper, Order
      * @return 1
      */
     @Override
-    public boolean insert(OrderForm orderForm) {
+    public String insert(OrderForm orderForm) {
         //以下操作,orderForm转化为orderMaster
         OrderMaster orderMaster = new OrderMaster();
         orderMaster.setBuyerName(orderForm.getName());
@@ -94,7 +94,8 @@ public class OrderMasterServiceImpl extends ServiceImpl<OrderMasterMapper, Order
             }
         }
 
-        return insert == 1;
+        if(insert == 1) return orderMaster.getOrderId();
+        return null;
     }
 
     /**

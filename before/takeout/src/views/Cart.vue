@@ -17,15 +17,6 @@
                     <a class="mui-control-item" :class="{'menu-active':menuIndex==index1}" @click="menuIndex = index1" v-for="(item,index1) in data">{{item.name}}</a>
                 </div>
             </div>
-
-            <!-- 商品列表segmentedControlContents
-            v-for="(item,index) in data 第一层循环 从data中取对象下标 即早餐午餐晚餐 将其循环展示
-            v-for="item1 in item.foods 第二层循环 data每个对象中的foods数组，将其循环展示 注意第二层循环用的名字是item1代表foods里的对象，与item区分开来
-            最里层的div与data里的foods的属性对应
-            注意img :src = item1.icon 冒号表示间接取 如果直接赋予网址则不需要冒号 img src= 具体url
-            v-show="menuIndex==index" 条件成立时才显示当前data对象 实现了早餐午餐晚餐之间的切换
-            @click="changeQuantity(item1,'minus')"点击调用changeQuantity方法改变数量，minus减plus加
-            -->
             <div id="segmentedControlContents" class="mui-col-xs-9">
                 <div v-for="(item,index) in data" v-show="menuIndex==index">
                     <div class="itembox mui-row" v-for="item1 in item.foods">
@@ -97,107 +88,16 @@
                 menuIndex: 0,//menuIndex变量用来动态选中某个左侧菜单标签 初始值为0，进入cart页面时默认选中的是早餐
                  logo: "../static/1.jpg",//指向public/static里的静态图片资源
                 //data用了双层数组嵌套 name-->foods 可以在name间切换 各个name下再展示foods
-                data: [
-                    {
-                        "name": "早餐",
-                        "type": 1,
-                        "foods": [
-                            {
-                                "id": "1",
-                                "name": "豆浆",
-                                "price": 3.5,
-                                "description": "很好喝",
-                                "icon": "http://5b0988e595225.cdn.sohucs.com/images/20181101/225d20df2bc14cefb363686d90d47004.jpeg",
-                                "quantity": 0,//顾客已选数量
-                                "stock": 6//库存
-                            },
-                            {
-                                "id": "2",
-                                "name": "红烧肉2",
-                                "price": 33.50,
-                                "description": "很好吃2",
-                                "icon": "http://n.sinaimg.cn/sinacn10/320/w640h480/20180827/5682-hifuvph4790369.jpg",
-                                "quantity": 0,
-                                "stock": 200
-                            },
-                            {
-                                "id": "3",
-                                "name": "红烧肉2",
-                                "price": 33.50,
-                                "description": "很好吃2",
-                                "icon": "http://n.sinaimg.cn/sinacn10/320/w640h480/20180827/5682-hifuvph4790369.jpg",
-                                "quantity": 0,
-                                "stock": 200
-                            }
-                        ]
-                    },
-                    {
-                        "name": "午餐",
-                        "type": 2,
-                        "foods": [
-                            {
-                                "id": "4",
-                                "name": "红烧肉",
-                                "price": 33.50,
-                                "description": "很好吃",
-                                "icon": "http://n.sinaimg.cn/sinacn10/320/w640h480/20180827/5682-hifuvph4790369.jpg",
-                                "quantity": 0,
-                                "stock": 200
-                            },
-                            {
-                                "id": "5",
-                                "name": "红烧肉2",
-                                "price": 33.50,
-                                "description": "很好吃2",
-                                "icon": "http://n.sinaimg.cn/sinacn10/320/w640h480/20180827/5682-hifuvph4790369.jpg",
-                                "quantity": 0,
-                                "stock": 200
-                            }
-                        ]
-                    },
-                    {
-                        "name": "晚餐",
-                        "type": 2,
-                        "foods": [
-                            {
-                                "id": "6",
-                                "name": "炖排骨",
-                                "price": 33.50,
-                                "description": "很好吃！！！",
-                                "icon": "http://n.sinaimg.cn/sinacn10/320/w640h480/20180827/5682-hifuvph4790369.jpg",
-                                "quantity": 0,
-                                "stock": 200
-                            },
-                            {
-                                "id": "7",
-                                "name": "牛肉面",
-                                "price": 33.50,
-                                "description": "很好吃",
-                                "icon": "http://n.sinaimg.cn/sinacn10/320/w640h480/20180827/5682-hifuvph4790369.jpg",
-                                "quantity": 0,
-                                "stock": 200
-                            },
-                            {
-                                "id": "3",
-                                "name": "火锅",
-                                "price": 33.50,
-                                "description": "很好吃",
-                                "icon": "http://n.sinaimg.cn/sinacn10/320/w640h480/20180827/5682-hifuvph4790369.jpg",
-                                "quantity": 0,
-                                "stock": 200
-                            }
-                        ]
-                    }
-                ]
+                data: null
             }
         },
         created(){
             this.$store.state.index = 1;
-            // this.$store.state.selectedArray = [];
-            // const _this = this
-            // axios.get('http://localhost:8180/product-service/buyer/product/list').then(function (resp) {
-            //     _this.data = resp.data.data
-            // })
+            this.$store.state.selectedArray = [];
+            const _this = this
+            axios.get('http://localhost:8383/product/buyer/product/list').then(function (resp) {
+                _this.data = resp.data.data
+            })
         },
         methods: {
             //提交 确认下单时进行判断

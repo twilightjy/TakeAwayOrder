@@ -25,41 +25,15 @@
         name: "Order",
         data(){
             return {
-                data:[
-                    {
-                        "orderId": "161873371171128075",
-                        "buyerName": "张三",
-                        "buyerPhone": "18868877111",
-                        "buyerAddress": "科技路",
-                        "buyerOpenid": "18eu2jwk2kse3r42e2e",
-                        "orderAmount": 0,
-                        "orderStatus": 0,
-                        "payStatus": 0,
-                        "createTime": 1490171219,
-                        "updateTime": 1490171219,
-                        "orderDetailList": null
-                    },
-                    {
-                        "orderId": "161873371171128076",
-                        "buyerName": "张三",
-                        "buyerPhone": "18868877111",
-                        "buyerAddress": "科技路",
-                        "buyerOpenid": "18eu2jwk2kse3r42e2e",
-                        "orderAmount": 0,
-                        "orderStatus": 0,
-                        "payStatus": 0,
-                        "createTime": 1490171219,
-                        "updateTime": 1490171219,
-                        "orderDetailList": null
-                    }]
+                data:null
             }
         },
         created(){
             this.$store.state.index = 2;
-            // const _this = this
-            // axios.get('http://localhost:8180/order-service/buyer/order/list/'+JSON.parse(window.localStorage.getItem('access-user')).openid+'/1/100').then(function (resp) {
-            //     _this.data = resp.data.data
-            // })
+            const _this = this
+            axios.get('http://localhost:8383/order/buyer/order/list/'+JSON.parse(window.localStorage.getItem('user')).openid).then(function (resp) {
+                _this.data = resp.data.data
+            })
         },
         methods:{
             transformOrderStatus(status){

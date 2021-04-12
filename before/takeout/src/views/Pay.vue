@@ -34,7 +34,7 @@
             pay(){
                 //支付交由后端处理
                 const _this = this
-                axios.put('http://localhost:8180/order-service/buyer/order/pay/'+JSON.parse(window.localStorage.getItem('access-user')).openid+'/'+this.$route.query.orderId).then(function (resp) {
+                axios.put('http://localhost:8383/order/buyer/order/pay/'+JSON.parse(window.localStorage.getItem('user')).openid+'/'+this.$route.query.orderId).then(function (resp) {
                     //支付完成后弹窗提示
                     let instance = Toast('支付成功');
                     setTimeout(() => {

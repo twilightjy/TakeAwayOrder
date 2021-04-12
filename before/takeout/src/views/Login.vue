@@ -62,7 +62,7 @@
                     return
                 }
 
-                //将输入的信息封装成buyer对象传给后台
+                //将输入的用户登录信息封装成buyer对象传给后台
                 var buyer = {
                     name:'张三',
                     openid:'sdfyc123Werdsfd98712Bdc'

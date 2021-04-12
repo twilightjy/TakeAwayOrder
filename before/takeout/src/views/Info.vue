@@ -63,23 +63,21 @@
                 //将用户信息和商品信息打包封装成一个orderForm对象传递给后端进行处理
                 //id是用户id，不是商品id。 从本地取出用户信息，用JSON.parse（）转化为JSON格式 ，openid就是用户id
                 //item是商品信息，从共享数据数组selectedArray中获取
-                // var orderForm ={
-                //     name: this.name,
-                //     phone: this.phone,
-                //     address: this.address,
-                //     id: JSON.parse(window.localStorage.getItem('access-user')).openid,
-                //     items: this.$store.state.selectedArray
-                // }
+                var orderForm ={
+                    name: this.name,
+                    phone: this.phone,
+                    address: this.address,
+                    id: JSON.parse(window.localStorage.getItem('user')).openid,
+                    items: this.$store.state.selectedArray
+                }
 
-                // Indicator.open('Loading...')
-                // // axios.post('http://localhost:8281/buyer/order/create',orderForm).then(function(resp){
-                // axios.post('http://localhost:8180/order-service/buyer/order/create',orderForm).then(function(resp){
-                //     if(resp.data.code==0){
-                //         Indicator.close()
-                //         _this.$router.push('/orderDetail?orderId='+resp.data.data.orderId)
-                //     }
-                // })
-                this.$router.push('/orderDetail')
+                Indicator.open('Loading...')
+                axios.post('http://localhost:8383/order/buyer/order/create',orderForm).then(function(resp){
+                    if(resp.data.code == 0){
+                        Indicator.close()
+                        _this.$router.push('/orderDetail?orderId='+resp.data.data.orderId)
+                    }
+                })
             }
         }
     }

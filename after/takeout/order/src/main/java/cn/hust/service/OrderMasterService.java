@@ -14,7 +14,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2021-04-08
  */
 public interface OrderMasterService extends IService<OrderMaster> {
-    public boolean insert(OrderForm orderForm) ;
+    public String insert(OrderForm orderForm) ;
 
     public OrderPageVo orderPageVo(Integer page , Integer size);
 }

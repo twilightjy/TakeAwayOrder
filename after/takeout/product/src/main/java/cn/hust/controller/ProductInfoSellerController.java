@@ -101,11 +101,11 @@ public class ProductInfoSellerController {
      * @return
      */
     @PutMapping("/updateStatus/{id}/{status}")
-    public ResultVo updateStatus(@PathVariable("id")Integer id , @PathVariable("status") boolean status){
+    public ResultVo<Boolean> updateStatus(@PathVariable("id")Integer id , @PathVariable("status") boolean status){
         Integer statusInt = 0;
         if(status) statusInt = 1;
         boolean updated = this.productInfoService.updateStatusById(statusInt, id);
-        if(updated) return ResultVoUtil.success(null);
+        if(updated) return ResultVoUtil.success(status);
         return ResultVoUtil.fail();
     }
 

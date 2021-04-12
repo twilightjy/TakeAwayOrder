@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -52,8 +53,10 @@ public class OrderMasterBuyerController {
             throw new RuntimeException(bindingResult.getFieldError().getDefaultMessage());
         }
         //order_master添加数据
-        this.orderMasterService.insert(orderForm);
-        return null ;
+        String orderId = this.orderMasterService.insert(orderForm);
+        Map<String,String> map = new HashMap<>();
+        map.put("orderId",orderId);
+        return ResultVoUtil.success(map);
     }
 
     /**订单列表
@@ -86,25 +89,21 @@ public class OrderMasterBuyerController {
      * @return 1
      */
     @GetMapping("/detail/{buyerId}/{orderId}")
-    public ResultVo<List<OrderMasterVo>> detail(@PathVariable("buyerId") String buyerId, @PathVariable("orderId") String orderId){
+    public ResultVo<OrderMasterVo> detail(@PathVariable("buyerId") String buyerId, @PathVariable("orderId") String orderId){
         //buyerId对应于buyer_openid,例如微信每个人有微信号，但是微信号还和一个openid绑定，也是一个字符+数字的32位组合
-        //一个买家可能对应多个订单，所以一个buyer_id可以查到多个order_id，借助于wrapper
+        //buyer_id+order_id对应唯一的order_master数据行，借助于wrapper
         QueryWrapper<OrderMaster> wrapper = new QueryWrapper<>();
         wrapper.eq("buyer_openid",buyerId);
         wrapper.eq("order_id",orderId);
-        List<OrderMaster> orderMasterList = this.orderMasterService.list(wrapper);
-        List<OrderMasterVo> orderMasterVoList = new ArrayList<>();
-        for (OrderMaster orderMaster : orderMasterList) {
-            OrderMasterVo orderMasterVo = new OrderMasterVo();
-            BeanUtils.copyProperties(orderMaster,orderMasterVo);//根据API,OrderDetailList暂时为null
-            //查询orderDetail
-            QueryWrapper<OrderDetail> wrapper1 = new QueryWrapper<>();
-            wrapper1.eq("order_id",orderId);
-            List<OrderDetail> orderDetailList = this.orderDetailService.list(wrapper1);
-            orderMasterVo.setOrderDetailList(orderDetailList);
-            orderMasterVoList.add(orderMasterVo);
-        }
-        return ResultVoUtil.success(orderMasterVoList);
+        OrderMaster orderMaster1 = this.orderMasterService.getOne(wrapper);//getOne 唯一数据
+        OrderMasterVo orderMasterVo = new OrderMasterVo();
+        BeanUtils.copyProperties(orderMaster1,orderMasterVo);
+        //查询orderDetail
+        QueryWrapper<OrderDetail> wrapper1 = new QueryWrapper<>();
+        wrapper1.eq("order_id",orderId);
+        List<OrderDetail> orderDetailList = this.orderDetailService.list(wrapper1);
+        orderMasterVo.setOrderDetailList(orderDetailList);
+        return ResultVoUtil.success(orderMasterVo);
     }
 
 
