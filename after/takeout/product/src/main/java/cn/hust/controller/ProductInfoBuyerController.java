@@ -9,6 +9,7 @@ import cn.hust.vo.ProductCategoryVo;
 import cn.hust.vo.ResultVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -33,12 +34,16 @@ public class ProductInfoBuyerController {
     @Autowired
     private ProductInfoService productInfoService;
 
+    @Value("${server.port}")
+    private String port ;
+
     /**商品列表
      * List<ProductCategoryVo> 是ResultVo<T> 的泛型声明
      * @return 商品列表
      */
     @GetMapping("/list")
     public ResultVo<List<ProductCategoryVo>> list(){
+        log.info("当前调用的端口是: {}",this.port);
         ResultVo<List<ProductCategoryVo>> resultVo = new ResultVo<>();
         resultVo.setCode(0);
         resultVo.setMsg("成功");

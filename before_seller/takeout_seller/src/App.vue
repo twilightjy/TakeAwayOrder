@@ -19,7 +19,7 @@
 
     methods:{
       initWebSocket(){
-        this.websock = new WebSocket('ws://'+this.$store.state.host+':8181/webSocket');
+        this.websock = new WebSocket('ws://localhost:8681/webSocket');
         this.websock.onmessage = this.webSocketOnMessage;
         this.websock.onopen = this.webSocketOnOpen;
         this.websock.onerror = this.websocketonerror;
@@ -29,7 +29,9 @@
         console.log('建立连接')
       },
       webSocketOnMessage(event){
+        //播放音乐
         document.getElementById('notice').play();
+        //弹出提示
         const _this = this
         this.$alert('有新的订单', '消息', {
           confirmButtonText: '确定',
@@ -40,6 +42,9 @@
       },
       webSocketClose(event){
         console.log('连接关闭');
+      },
+      websocketonerror(event){
+        console.log('出错')
       }
     },
     created() {

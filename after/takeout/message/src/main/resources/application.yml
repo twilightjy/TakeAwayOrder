@@ -1,0 +1,7 @@
+server:
+  port: 8681
+spring:
+  application:
+    name: message
+rocketmq:
+  name-server: 192.168.83.129:9876

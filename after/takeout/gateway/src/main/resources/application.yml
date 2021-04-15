@@ -17,3 +17,6 @@ spring:
       discovery:
         locator:
           enabled: true
+product:
+  ribbon:
+    NFLoadBalancerRuleClassName: cn.hust.configuraton.NacosWeightedRule

@@ -9,11 +9,11 @@ import cn.hust.mapper.OrderDetailMapper;
 import cn.hust.mapper.OrderMasterMapper;
 import cn.hust.mapper.ProductInfoMapper;
 import cn.hust.service.OrderMasterService;
-import cn.hust.vo.OrderMasterVo;
 import cn.hust.vo.OrderPageVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +43,9 @@ public class OrderMasterServiceImpl extends ServiceImpl<OrderMasterMapper, Order
 
     @Autowired
     private OrderDetailMapper orderDetailMapper ;
+
+    @Autowired
+    private RocketMQTemplate rocketMQTemplate;
 
     /**
      * 创建订单 需要修改order_master order_detail product_info 三张表
@@ -93,7 +96,8 @@ public class OrderMasterServiceImpl extends ServiceImpl<OrderMasterMapper, Order
                 }
             }
         }
-
+        //给MQ发送消息
+        this.rocketMQTemplate.convertAndSend("myTopic","有新订单!");
         if(insert == 1) return orderMaster.getOrderId();
         return null;
     }
@@ -107,7 +111,9 @@ public class OrderMasterServiceImpl extends ServiceImpl<OrderMasterMapper, Order
     @Override
     public OrderPageVo orderPageVo(Integer page, Integer size) {
         Page<OrderMaster> masterPage = new Page<>(page,size);
-        Page<OrderMaster> orderMasterPage = this.orderMasterMapper.selectPage(masterPage, null);
+        QueryWrapper<OrderMaster> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc("create_time");
+        Page<OrderMaster> orderMasterPage = this.orderMasterMapper.selectPage(masterPage, wrapper);
         OrderPageVo orderPageVo = new OrderPageVo();
         orderPageVo.setContent(orderMasterPage.getRecords());
         orderPageVo.setSize(orderMasterPage.getSize());
