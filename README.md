@@ -14,5 +14,3 @@
  Spring Cloud Alibaba + Rocket MQ + MyBatis Plus + MyBatis + MySQL + 负载均衡 + 服务网关
 
 ---
-
-2021.4.12 完成后端与前端买家/卖家端的接口对接，页面显示和跳转正常，数据库同步正常
